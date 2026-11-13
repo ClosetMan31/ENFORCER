@@ -5,9 +5,9 @@ public class Bullet : MonoBehaviour
     public float speed = 15f;
     public float lifeTime = 3f;
 
-    private float direction;
+    private Vector2 direction;
 
-    public void SetDirection(float dir)
+    public void SetDirection(Vector2 dir)
     {
         direction = dir;
     }
@@ -19,6 +19,6 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector2.right * direction * speed * Time.deltaTime);
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 }

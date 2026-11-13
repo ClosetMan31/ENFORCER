@@ -66,6 +66,7 @@ Transform:
   m_Children:
   - {fileID: 7722002712535039455}
   - {fileID: 2057011851269887102}
+  - {fileID: 6743302464039220960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4876729348426400048
@@ -208,6 +209,7 @@ MonoBehaviour:
   jumpAction: {fileID: -113578699583662101, guid: 98ec1c26d1eb7504caf61ff7f13d07c8, type: 3}
   dashAction: {fileID: -1225220574333879946, guid: 98ec1c26d1eb7504caf61ff7f13d07c8, type: 3}
   shootAction: {fileID: 6961492689390609975, guid: 98ec1c26d1eb7504caf61ff7f13d07c8, type: 3}
+  aimAction: {fileID: 1916823434463835622, guid: 98ec1c26d1eb7504caf61ff7f13d07c8, type: 3}
   speed: 5
   jumpPower: 12
   dashSpeed: 15
@@ -215,12 +217,44 @@ MonoBehaviour:
   dashCooldown: 2
   bulletPrefab: {fileID: 2067893014636702940, guid: d9aeac136705ff447a8028ae3785ce54, type: 3}
   firePoint: {fileID: 2057011851269887102}
+  upperFirePoint: {fileID: 6743302464039220960}
   fireCooldown: 0.2
   groundCheck: {fileID: 7722002712535039455}
   groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!1 &8366141863418007598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6743302464039220960}
+  m_Layer: 0
+  m_Name: Upper FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6743302464039220960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366141863418007598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5199128014679293531}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8940093105794060648
 GameObject:
   m_ObjectHideFlags: 0

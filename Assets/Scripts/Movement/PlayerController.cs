@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference dashAction;
     [SerializeField] private InputActionReference shootAction;
+    [SerializeField] private InputActionReference aimAction;
 
     [Header("Movement")]
     [SerializeField] private float speed = 5f;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform upperFirePoint;
     [SerializeField] private float fireCooldown = 0.2f;
 
     [Header("Ground Check")]
@@ -32,11 +34,14 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private Vector2 moveInput;
+    private float verticalInput;
+    private float horizontalInput;
     private bool isFacingRight = true;
     private bool jumpRequested;
     private bool isDashing;
     private bool canDash = true;
     private float nextFireTime;
+    
 
     private void Awake()
     {
@@ -49,6 +54,7 @@ public class PlayerController : MonoBehaviour
         jumpAction.action.Enable();
         dashAction.action.Enable();
         shootAction.action.Enable();
+        aimAction.action.Enable();
 
         jumpAction.action.performed += OnJump;
         dashAction.action.performed += OnDash;
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
         jumpAction.action.Disable();
         dashAction.action.Disable();
         shootAction.action.Disable();
+        aimAction.action.Disable();
     }
 
     private void OnJump(InputAction.CallbackContext ctx)
@@ -78,16 +85,26 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // ruch co klatkę
+        // ruch co klatkę + aktualizacja danych
         moveInput = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = moveInput.x;
+        verticalInput = moveInput.y;
+
 
         // strzał
         if (shootAction.action.IsPressed() && Time.time >= nextFireTime)
         {
-            Shoot();
-            nextFireTime = Time.time + fireCooldown;
+            if (Mathf.Abs(horizontalInput) < 0.1f && aimAction.action.IsPressed())
+            {
+                Shoot(upperFirePoint, Vector2.up);
+                nextFireTime = Time.time + fireCooldown;
+            }
+            else
+            {
+            Shoot(firePoint, (isFacingRight ? Vector2.right : Vector2.left));
+            nextFireTime = Time.time + fireCooldown;     
+         }
         }
-
         FlipDirection();
     }
 
@@ -126,10 +143,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    private void Shoot(Transform selectedFirePoint, Vector2 direction)
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().SetDirection(isFacingRight ? 1f : -1f);
+        GameObject bullet = Instantiate(bulletPrefab, selectedFirePoint.position, Quaternion.identity);
+        bullet.GetComponent<Bullet>().SetDirection(direction);
     }
 
     private IEnumerator DashRoutine()
